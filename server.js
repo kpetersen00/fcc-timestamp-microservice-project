@@ -19,21 +19,21 @@ app.get('/', function (req, res) {
 });
 
 // your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
-});
+// app.get('/api/hello', function (req, res) {
+//   res.json({ greeting: 'hello API' });
+// });
 app.get('/api/:date?', (req, res) => {
   let input = req.params.date;
   const dateObj = {};
   if (!input) {
-    dateObj.unix = new Date().getTime();
+    dateObj.unix = new Date().valueOf();
     dateObj.utc = new Date().toUTCString();
-  } else if (input.includes('-')) {
-    dateObj.unix = new Date(input).getTime();
+  } else if (input.match(/\D/)) {
+    dateObj.unix = new Date(input).valueOf();
     dateObj.utc = new Date(input).toUTCString();
   } else {
     input = parseInt(input);
-    dateObj.unix = new Date(input).getTime();
+    dateObj.unix = new Date(input).valueOf();
     dateObj.utc = new Date(input).toUTCString();
   }
   if (!dateObj.unix || !dateObj.utc) {
